@@ -1,6 +1,7 @@
 /* Register design tokens for Tailwind v4 */
 @theme inline {
-  --color-background: var(--background);
+  --color-background-1: var(--background-1);
+  --color-background-2: var(--background-2);
   --color-foreground: var(--foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
@@ -13,7 +14,8 @@
 /* Light theme values */
 :root,
 [data-theme="light"] {
-  --background: #fdfdfd;
+  --background-1: #D0D8F0;
+  --background-2: #CDCCF5;
   --foreground: #282728;
   --accent: #006cac;
   --accent-foreground: #ffffff;
@@ -24,7 +26,8 @@
 
 /* Dark theme values */
 [data-theme="dark"] {
-  --background: #212737;
+  --background-1: #1a2853;
+  --background-2: #121050;
   --foreground: #eaedf3;
   --accent: #ff6b01;
   --accent-foreground: #ffffff;

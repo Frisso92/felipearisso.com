@@ -1,37 +1,43 @@
 ---
-title: "About"
-description: "A bit about me and this blog."
+author: Felipe A. Risso
+pubDatetime: 2026-08-02T12:00:00Z
+title: About Me
+postSlug: about
+featured: true
+draft: false
+tags:
+  - cyber-security
+  - ics
+  - ot-security
+  - embedded-systems
+description: Electronic Engineering student focusing on industrial control systems, cybersecurity, and OT resilience.
 ---
 
-AstroPaper is a minimal, accessible and SEO-friendly blog theme built with [Astro](https://astro.build/) and [Tailwind CSS](https://tailwindcss.com/).
+## Overview
 
-![Astro Paper](@/assets/images/astropaper-og.jpg)
+I am an Electronic Engineering student and certified Electromechanical Technician with a passion for **Industrial Control Systems (ICS)** and **Operational Technology (OT) security**. My work bridges the gap between hardware execution and system-level cybersecurity, focusing on protecting physical infrastructures from emerging threats.
 
-AstroPaper provides a solid foundation for blogs, or even portfolios\_ with full markdown support, built-in dark mode, and a clean layout that works out-of-the-box.
+Driven by a hands-on technical approach, I focus on understanding how modern control protocols, embedded systems, and industrial communication networks operate, and how to make them resilient against real-world vulnerabilities.
 
-The blog posts in this theme also serve as guides, docs or example articles\_ making AstroPaper a flexible starting point for your next content-driven site.
+---
 
-## Features
+## Core Technical Focus
 
-AstroPaper comes with a set of useful features that make content publishing easy and effective:
+* **ICS/OT Security:** Industrial protocols (Modbus, CAN bus, SCADA architectures), threat modeling, and network segmentation.
+* **Embedded Systems & Hardware:** Low-level programming, microcontrollers, signal analysis, and hardware-oriented security.
+* **Cybersecurity Operations:** Practical vulnerability assessment, offensive security labs, and custom payload development for security testing.
+* **Linux & Tooling:** Custom environment builds, automation, and command-line workflows for efficiency and security audits.
 
-- SEO-friendly
-- Fast performance
-- Light & dark mode
-- Highly customizable
-- Organizable blog posts
-- Responsive & accessible
-- Static search with [PageFind](https://pagefind.app/)
-- Automatic social image generation
+---
 
-and so much more.
+## Background & Projects
 
-## Show your support
+My journey combines rigorous engineering fundamentals with practical security research. Whether analyzing physical sensor data, reverse-engineering communications, or configuring isolated lab environments for vulnerability testing, I strive to design systems that are secure by design.
 
-If you like [AstroPaper](https://github.com/satnaing/astro-paper), consider giving it a star ⭐️.
+Feel free to check out my articles and write-ups where I document my technical findings, project implementations, and ongoing research in OT security.
 
-Found a bug 🐛 or have an improvement ✨ in mind? Feel free to open an [issue](https://github.com/satnaing/astro-paper/issues), submit a [pull request](https://github.com/satnaing/astro-paper/pulls) or start a [discussion](https://github.com/satnaing/astro-paper/discussions).
+---
 
-If you find this theme helpful, you can also [sponsor me on GitHub](https://github.com/sponsors/satnaing) or [buy me a coffee](https://buymeacoffee.com/satnaing) to show your support — every penny counts.
+## Contact & Connections
 
-Kyay zuu! 🙏🏼
+You can reach out or follow my work via the links in the footer, or contact me directly via email.
