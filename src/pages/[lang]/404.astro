@@ -9,6 +9,15 @@ import config from "@/config";
 
 const locale = Astro.currentLocale ?? config.site.lang;
 const t = useTranslations(locale);
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: "en"}},
+    { params: { lang: "es"}},
+  ];
+}
+
+const { lang } = Astro.params;
 ---
 
 <Layout title={`${t.notFound.title} | ${config.site.title}`}>
