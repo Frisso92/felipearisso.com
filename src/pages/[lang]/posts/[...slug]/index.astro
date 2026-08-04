@@ -17,33 +17,46 @@ import AdjacentPostNav from "./_components/AdjacentPostNav.astro";
 import config from "@/config";
 
 export async function getStaticPaths() {
+  const languages = ["es", "en"];
   const posts = await getCollection("posts");
-  const sortedPosts = getSortedPosts(posts);
 
-  return sortedPosts.map((post, index) => ({
-    params: { slug: getPostSlug(post.id, post.filePath) },
-    props: {
-      post,
-      prevPost:
-        index > 0
-          ? {
-              id: sortedPosts[index - 1].id,
-              title: sortedPosts[index - 1].data.title,
-              filePath: sortedPosts[index - 1].filePath,
-            }
-          : null,
-      nextPost:
-        index < sortedPosts.length - 1
-          ? {
-              id: sortedPosts[index + 1].id,
-              title: sortedPosts[index + 1].data.title,
-              filePath: sortedPosts[index + 1].filePath,
-            }
-          : null,
-    },
-  }));
+  return languages.flatMap(lang => {
+    const langPosts = posts.filter(post => post.id.startsWith(`${lang}/`));
+    const sortedPosts = getSortedPosts(langPosts);
+
+    return sortedPosts.map((post, index) => {
+      // Extrae el slug y remueve el "en/" o "es/" inicial
+      const rawSlug = getPostSlug(post.id, post.filePath);
+      const cleanSlug = rawSlug.replace(new RegExp(`^${lang}/`), "");
+
+      return {
+        params: {
+          lang,
+          slug: cleanSlug,
+        },
+        props: {
+          post,
+          prevPost:
+            index > 0
+              ? {
+                  id: sortedPosts[index - 1].id,
+                  title: sortedPosts[index - 1].data.title,
+                  filePath: sortedPosts[index - 1].filePath,
+                }
+              : null,
+          nextPost:
+            index < sortedPosts.length - 1
+              ? {
+                  id: sortedPosts[index + 1].id,
+                  title: sortedPosts[index + 1].data.title,
+                  filePath: sortedPosts[index + 1].filePath,
+                }
+              : null,
+        },
+      };
+    });
+  });
 }
-
 type AdjacentPost = {
   id: string;
   title: string;
@@ -56,8 +69,9 @@ type Props = {
   nextPost: AdjacentPost;
 };
 
+const { lang } = Astro.params;
 const { post, prevPost, nextPost } = Astro.props;
-const locale = Astro.currentLocale ?? config.site.lang;
+const locale = lang ?? Astro.currentLocale ?? config.site.lang;
 
 const {
   title,
@@ -271,8 +285,6 @@ const ogImage = ogImageUrl
     let overlay = null;
     let lastFocused = null;
 
-    // Defer attribute mutations so they don't push the LCP timestamp.
-    // Event listeners below use delegation and don't need the attributes to exist yet.
     requestAnimationFrame(() => {
       const images = Array.from(article.querySelectorAll("img"));
       for (const image of images) {
@@ -462,7 +474,7 @@ const ogImage = ogImageUrl
       }
       const remove = () => el.remove();
       el.addEventListener("transitionend", remove, { once: true });
-      setTimeout(remove, 250); // fallback in case transitionend never fires
+      setTimeout(remove, 250);
       el.classList.remove("opacity-100");
     }
 
@@ -474,7 +486,6 @@ const ogImage = ogImageUrl
       }
     }
 
-    // Keep keyboard focus inside the open dialog.
     function trapFocus(e) {
       if (!overlay) return;
       const focusables = overlay.querySelectorAll(

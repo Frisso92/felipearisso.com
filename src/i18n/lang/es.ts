@@ -28,6 +28,7 @@ export default {
     page: "Página",
   },
   home: {
+    subtitle: "Estudiante de Ingeniería Electrónica | Apasionado por la Ciberseguridad",
     socialLinks: "Redes Sociales",
     featured: "Destacados",
     recentPosts: "Publicaciones Recientes",

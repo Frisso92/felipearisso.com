@@ -28,6 +28,7 @@ export default {
     page: "Page",
   },
   home: {
+    subtitle: "Electronics Engineering Student | Passionate about Cybersecurity",
     socialLinks: "Social Links",
     featured: "Featured",
     recentPosts: "Recent Posts",

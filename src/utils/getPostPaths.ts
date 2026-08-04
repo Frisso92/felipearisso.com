@@ -4,15 +4,17 @@ import { slugifyStr } from "./slugify";
 import config from "@/config";
 
 function getPostPathSegments(filePath: string | undefined): string[] {
-  return (
+  const segments =
     filePath
       ?.replace(BLOG_PATH, "")
       .split("/")
       .filter(path => path !== "")
       .filter(path => !path.startsWith("_"))
       .slice(0, -1)
-      .map(segment => slugifyStr(segment)) ?? []
-  );
+      .map(segment => slugifyStr(segment)) ?? [];
+
+  // Elimina el primer segmento correspondiente al idioma (es/en)
+  return segments.slice(1);
 }
 
 function getIdSlug(id: string): string {
@@ -30,11 +32,11 @@ function getPostSlugPath(id: string, filePath: string | undefined): string {
 
 /**
  * Returns the slug-only path for use as a route param in `getStaticPaths`.
- * No base prefix, no locale — Astro handles those at a higher level.
- * e.g. `/examples/my-post`
+ * No base prefix, no locale.
+ * e.g. `examples/my-post` or `setting-dates-via-git-hooks`
  */
 export function getPostSlug(id: string, filePath: string | undefined): string {
-  return `/${getPostSlugPath(id, filePath)}`;
+  return getPostSlugPath(id, filePath);
 }
 
 /**

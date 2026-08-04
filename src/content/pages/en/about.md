@@ -2,7 +2,6 @@
 author: Felipe A. Risso
 pubDatetime: 2026-08-02T12:00:00Z
 title: About Me
-postSlug: about
 featured: true
 draft: false
 tags:
