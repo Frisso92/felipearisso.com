@@ -3,9 +3,21 @@ import satori from "satori";
 import sharp from "sharp";
 import { fontData, experimental_getFontFileURL } from "astro:assets";
 import { getFontPathByWeight } from "@/utils/getFontPathByWeight";
+import { useTranslations } from "@/i18n";
 import config from "@/config";
 
+export function getStaticPaths() {
+  return [
+    { params: { lang: "en" } },
+    { params: { lang: "es" } },
+  ];
+}
+
 export const GET: APIRoute = async context => {
+  const { lang } = context.params;
+  const locale = lang ?? config.site.lang;
+  const t = useTranslations(locale);
+
   const fonts = fontData["--font-google-sans-code"];
   const regularFontPath = getFontPathByWeight(fonts, 400);
   const boldFontPath = getFontPathByWeight(fonts, 700);
@@ -106,7 +118,7 @@ export const GET: APIRoute = async context => {
                             type: "p",
                             props: {
                               style: { fontSize: 28 },
-                              children: config.site.description,
+                              children: t.home.subtitle ?? config.site.description,
                             },
                           },
                         ],

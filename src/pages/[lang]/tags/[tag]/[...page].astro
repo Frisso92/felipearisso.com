@@ -15,25 +15,32 @@ import { useTranslations } from "@/i18n";
 import config from "@/config";
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-  const posts = await getCollection("posts", ({ data }) => !data.draft);
-  const tags = getUniqueTags(posts);
+  const languages = ["es", "en"];
+  const allPosts = await getCollection("posts", ({ data }) => !data.draft);
 
-  return tags.flatMap(({ tag, tagName }) => {
-    const tagPosts = getSortedPosts(
-      posts.filter(({ data }) => slugifyAll(data.tags).includes(tag))
-    );
+  return languages.flatMap(lang => {
+    // Filter posts that belong to the current language folder
+    const langPosts = allPosts.filter(post => post.id.startsWith(`${lang}/`));
+    const tags = getUniqueTags(langPosts);
 
-    return paginate(tagPosts, {
-      params: { tag },
-      props: { tagName },
-      pageSize: config.posts.perPage,
+    return tags.flatMap(({ tag, tagName }) => {
+      const tagPosts = getSortedPosts(
+        langPosts.filter(({ data }) => slugifyAll(data.tags).includes(tag))
+      );
+
+      return paginate(tagPosts, {
+        params: { lang, tag },
+        props: { tagName },
+        pageSize: config.posts?.perPage ?? 4,
+      });
     });
   });
 }
 
 const { page, tagName } = Astro.props;
+const { lang } = Astro.params;
 
-const locale = Astro.currentLocale ?? config.site.lang;
+const locale = lang ?? Astro.currentLocale ?? config.site.lang;
 const t = useTranslations(locale);
 ---
 
