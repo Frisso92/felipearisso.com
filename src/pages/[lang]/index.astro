@@ -15,27 +15,25 @@ import config from "@/config";
 import { Image } from "astro:assets";
 import profilePhoto from "@/assets/images/ProfilePic.png";
 import LangSwitcher from "@/components/LangSwitcher.astro";
+import CvButton from "@/components/CvButton.astro";
 
 const { features, socials, posts: postsConfig } = config;
 
 const locale = Astro.currentLocale ?? config.site.lang;
 const t = useTranslations(locale);
 
-const posts = await getCollection("posts", ({ id }) => id.startsWith(`${locale}/`));
+const posts = await getCollection("posts", ({ id }) =>
+  id.startsWith(`${locale}/`)
+);
 const sortedPosts = getSortedPosts(posts);
 const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
 const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 const homePath = getRelativeLocaleUrl(locale, "");
 
 export function getStaticPaths() {
-  return [
-    { params: { lang: "en"}},
-    { params: { lang: "es"}},
-  ];
+  return [{ params: { lang: "en" } }, { params: { lang: "es" } }];
 }
-
 ---
-
 
 <Layout>
   <main
@@ -48,7 +46,7 @@ export function getStaticPaths() {
       id="theme-toggle"
       class="fixed top-4 right-4 z-50 flex items-center justify-center gap-3"
     >
-    <LangSwitcher></LangSwitcher>
+      <LangSwitcher />
       {
         features.lightAndDarkMode && (
           <div class="flex items-center">
@@ -75,6 +73,8 @@ export function getStaticPaths() {
         alt="Felipe A. Risso"
         width={277}
         height={319}
+        loading="eager"
+        fetchpriority="high"
         class="mb-4 h-auto w-32 rounded-2xl sm:w-45"
       />
       <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl">
@@ -92,6 +92,23 @@ export function getStaticPaths() {
           </div>
         )
       }
+
+      <div
+        id="scroll-indicator"
+        class="text-muted-foreground pointer-events-none absolute bottom-8 left-1/2 -translate-x-1/2 transition-opacity duration-300"
+        aria-hidden="true"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="size-6 fill-none stroke-current stroke-2"
+          viewBox="0 0 24 24"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="m7 7 5 5 5-5"></path>
+          <path d="m7 13 5 5 5-5"></path>
+        </svg>
+      </div>
     </section>
 
     {
@@ -137,5 +154,28 @@ export function getStaticPaths() {
       </LinkButton>
     </div>
   </main>
+
+  <CvButton />
   <Footer />
 </Layout>
+
+<script>
+  function initScrollIndicator() {
+    const indicator = document.getElementById("scroll-indicator");
+    if (!indicator) return;
+
+    function handleScroll() {
+      if (window.scrollY > 40) {
+        indicator?.classList.add("opacity-0");
+      } else {
+        indicator?.classList.remove("opacity-0");
+      }
+    }
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+  }
+
+  document.addEventListener("astro:page-load", initScrollIndicator);
+  initScrollIndicator();
+</script>

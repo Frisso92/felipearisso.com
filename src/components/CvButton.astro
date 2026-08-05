@@ -1,0 +1,44 @@
+---
+import { useTranslations } from "@/i18n";
+import config from "@/config";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = "" } = Astro.props;
+
+const { lang } = Astro.params;
+const locale = lang ?? Astro.currentLocale ?? config.site.lang;
+
+// Archivo y etiqueta adaptados al idioma activo
+const isEs = locale === "es";
+const label = isEs ? "Descargar CV" : "Download CV";
+const cvUrl = isEs ? "/CV_Felipe_Risso_ES.pdf" : "/CV_Felipe_Risso_EN.pdf";
+---
+
+<a
+  href={cvUrl}
+  download
+  target="_blank"
+  rel="noopener noreferrer"
+  class:list={[
+    "focus-outline fixed bottom-6 left-6 z-40 flex items-center gap-2 rounded-full border border-border bg-background/80 px-4 py-2.5 text-xs sm:text-sm font-semibold text-foreground shadow-lg backdrop-blur-md transition-all duration-200 hover:border-accent hover:text-accent",
+    className,
+  ]}
+  aria-label={label}
+  title={label}
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="size-4 stroke-current fill-none stroke-2"
+    viewBox="0 0 24 24"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+    <polyline points="7 10 12 15 17 10"></polyline>
+    <line x1="12" y1="15" x2="12" y2="3"></line>
+  </svg>
+  <span>{label}</span>
+</a>
