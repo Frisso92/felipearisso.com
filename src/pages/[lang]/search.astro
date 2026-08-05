@@ -27,6 +27,13 @@ const pagefindBundlePath = getAssetPath("pagefind/");
 const t = useTranslations(locale);
 
 
+export function getStaticPaths() {
+  return [
+    { params: { lang: "en" } },
+    { params: { lang: "es" } },
+  ];
+}
+
 ---
 
 <Layout title={`${t.pages.searchTitle} | ${config.site.title}`}>

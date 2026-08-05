@@ -20,3 +20,10 @@ export async function GET() {
     })),
   });
 }
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: "en" } },
+    { params: { lang: "es" } },
+  ];
+}

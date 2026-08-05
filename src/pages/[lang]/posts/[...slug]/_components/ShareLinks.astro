@@ -3,8 +3,15 @@ import LinkButton from "@/components/LinkButton.astro";
 import { tplStr, useTranslations } from "@/i18n";
 import config from "@/config";
 
+interface Props {
+  class?: string;
+}
+
 const { shareLinks } = config;
-const t = useTranslations(Astro.currentLocale);
+
+const { lang } = Astro.params;
+const locale = lang ?? Astro.currentLocale ?? config.site.lang;
+const t = useTranslations(locale);
 
 const icons = import.meta.glob<{
   default: (_props: Record<string, unknown>) => unknown;

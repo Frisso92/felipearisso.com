@@ -19,6 +19,14 @@ type Props = {
 const { prevPost, nextPost } = Astro.props;
 const locale = Astro.currentLocale ?? config.site.lang;
 const t = useTranslations(locale);
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: "en"}},
+    { params: { lang: "es"}},
+  ];
+}
+
 ---
 
 <div data-pagefind-ignore class="my-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
